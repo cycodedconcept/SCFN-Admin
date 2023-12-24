@@ -1,3 +1,5 @@
+const baseUrl = "https://www.sicklecellfoundation.com/scfn-luth-api/api/";
+
 function adminLog(event) {
     event.preventDefault()
 
@@ -16,7 +18,23 @@ function adminLog(event) {
         getSpin.style.display = "none";
     }
     else {
-        
+        const logData = new FormData()
+        logData.append("email", getEmail);
+        logData.append("password", getPassword);
+
+        const logMethod = {
+            method: 'POST',
+            body: logData
+        }
+
+        const url = `${baseUrl}login-admin`;
+
+        fetch(url, logMethod)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => console.log('error', error));
     }
 
 }
