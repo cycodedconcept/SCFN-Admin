@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200;400;500;600;700;800&display=swap');
+
+* {
+    font-family: "Lexend", sans-serif;
+}
+
+.admin-left {
+    background: #DF3331;
+    height: 100vh;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.adminInput {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid rgb(209, 207, 207);
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.adminInput:focus {
+    border: 1px solid #000 !important;
+}
+
+.adminBtn {
+    background-color: #DF3331;
+    border: 0;
+    outline: none;
+    box-sizing: none;
+    width: 100%;
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    font-size: 20px;
+}
+
+.adminBtn:hover {
+    background: green;
+}
+.spin {
+    display: none;
+}
+
+.admin-right {
+    margin: 20% auto;
+}
+
+@media screen and (max-width: 680px) {
+    .admin-left {
+        height: auto;
+        padding: 20px;
+    }
+
+    .pl-5, .pr-5 {
+        padding: 0 !important;
+    }
+}
+
