@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCFN | Dashboard</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!-- font awesome CDN -->
+
+    <!-- custom CSS -->
+    <link rel="stylesheet" href="../main.css">
+
+    <style>
+        table th:first-child {
+        text-align: left;
+        /* max-width: 30px; */
+        }
+    </style>
+
+</head>
+<body>
+    <div class="pagemodal">
+        <div class="preloader">
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-ripple" style="background:0 0"><circle cx="50" cy="50" r="4.719" fill="none" stroke="#1d3f72" stroke-width="2"><animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="3" keySplines="0 0.2 0.8 1" begin="-1.5s" repeatCount="indefinite"/><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="3" keySplines="0.2 0 0.8 1" begin="-1.5s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="27.591" fill="none" stroke="#5699d2" stroke-width="2"><animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="3" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"/><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="3" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"/></circle></svg>
+        </div>
+    </div>
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar bg-dark">
+       <div class="sidebar-brand mb-5">
+          <a href="dashboard.html"><img class="imglog" src="../assets/logo2.png" alt="wave"></a>
+       </div>
+
+       <div class="sidebar-menu">
+       <ul>
+            <li>
+             <a href="dashboard.html" class="active" style="text-decoration: none;"><i class="fa fa-dashboard mr-2" style="color: #DF3331;"></i><span>Dashboard</span></a>
+            </li>
+            <li>
+             <a onclick="logAdminOut(event)" style="text-decoration: none;"><i class="fas fa-sign-out mr-2" style="color: #fff;"></i><span class="logspan">Logout</span></a>
+            </li>
+       </ul>
+    </div>
+    </div>
+
+    <div class="main-content">
+       <header>
+           <div class="ripus">
+                <div class="d-flex">
+                    <h2 class="cn">
+                        <label for="nav-toggle">
+                            <i class="fa fa-bars" style="color: #DF3331;"></i>
+                        </label>
+                    </h2>
+                </div>
+           </div>
+           
+      </header>
+
+       <main>
+
+        <div class="create text-right mt-5">
+            <button class="create-btn">Create Event</button>
+        </div>
+
+        <div class="jumbotron bg-light mt-5">
+            
+            <div class="outer-wrapper mt-5">
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Student Name</th>
+                                <th>Email Address</th>
+                                <th>Phone Number</th>
+                                <th>Course of interest</th>
+                                <th>Time</th>
+                                <th>Year</th>
+                                <th>Month</th>
+                                <th>Whatsapp</th>
+                                <th>Update Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tableindex">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <nav class="mt-5 mio">
+                    <ul class="pagination pg-blue justify-content-center">
+                        <div id="pagination-container" class="wesg"></div>
+                    </ul>
+                </nav>
+                
+            </div>
+        </div>
+
+        <div id="up-modal" class="mymodal mb-5">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-center">Update Details</h3>
+                <span class="close" onclick="upModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="text" id="name" class="form-control mb-4" placeholder="name">
+                    <input type="email" id="email" class="form-control mb-4" placeholder="email">
+                    <input type="tel" id="phone" class="form-control mb-4" placeholder="phone number">
+                    <input type="text" id="age" class="form-control mb-4" placeholder="age">
+                    <input type="text" id="interest" class="form-control mb-4" placeholder="course of interest">
+                    <input type="text" id="taken" class="form-control mb-4" placeholder="Yes or No">
+                    <input type="text" id="mode" class="form-control mb-4" placeholder="physical">
+                    <input type="text" id="reason" class="form-control mb-4" placeholder="promotion">
+                    <h3 class="text-center">Schedule</h3>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6">
+                            <input type="date" id="schedule" class="form-control mb-4"> 
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6">
+                            <input type="time" id="time" class="form-control mb-4">
+                        </div>
+                    </div>
+                    <input type="text" id="location" class="form-control mb-4" placeholder="ikeja">
+                    <input type="text" id="job" class="form-control mb-4" placeholder="banker">
+                    <hr>
+                    <select class="shape status">
+                    <option>..choose status..</option>
+                    <option value="interested">Interested</option>
+                    <option value="not_interested">Not Interested</option>
+                    <option value="unreachable">Unreachable</option>
+                    <option value="undecided">Undecided</option>
+                    <option value="next cohort">Next Cohort</option>
+                    <option value="pending">Pending</option>
+                    <option value="enrolled">Enrolled</option>
+                    </select>
+                    <textarea placeholder="Enter Remarks" class="shape2 comment"></textarea>
+
+                    <button class="my-4 adminBtn" onclick="updateStatus(event)">Update status</button>
+                </form>
+            </div>
+        </div>
+        </div>
+
+       </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- custom javascript -->
+    <script src="./js/script.js"></script>
+    <script type="text/javascript" src="oauth.js"></script>
+
+</body>
+</html>

@@ -33,6 +33,26 @@ function adminLog(event) {
         .then(response => response.json())
         .then(result => {
             console.log(result)
+            localStorage.setItem("admin", result.api_key);
+
+            if (result.status === "success") {
+                Swal.fire({
+                    icon: 'success',
+                    text: `${result.status}`,
+                    confirmButtonColor: '#25067C'
+                })
+
+                setTimeout(() => {
+                    location.href = "./dashboard"
+                }, 3000)
+            }
+            else {
+                Swal.fire({
+                    icon: 'info',
+                    text: `${result.status}`,
+                    confirmButtonColor: '#25067C'
+                }) 
+            }
         })
         .catch(error => console.log('error', error));
     }

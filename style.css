@@ -41,9 +41,7 @@
 .adminBtn:hover {
     background: green;
 }
-.spin {
-    display: none;
-}
+
 
 .admin-right {
     margin: 20% auto;
@@ -60,3 +58,6 @@
     }
 }
 
+.spin {
+    display: none;
+}
