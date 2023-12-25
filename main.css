@@ -881,14 +881,16 @@ hr {
     }
 }
 
-.adminInput {
-    outline: none;
-    box-shadow: none;
-    border: 1px solid #000;
-    padding: 25px;
+.palo {
+    width: 100%;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 14px;
+    border: 1px solid rgb(204, 201, 201);
+    border-radius: 10px;
 }
 
-.adminInput:focus {
+.palo:focus {
     border: 1px solid #000 !important;
 }
 
@@ -958,8 +960,8 @@ hr {
 }
   
 .modal-content {
-    margin: 10% auto;
-    width: 40%;
+    margin: 10% auto 10% 30%;
+    width: 56%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
     animation-name: modalopen;
     animation-duration: 2s;
@@ -985,7 +987,7 @@ hr {
 }
 
 .modal-header {
-    background: #2D85DE;
+    background: #DF3331;
     padding: 15px;
     color: #fff;
     border-top-left-radius: 5px;

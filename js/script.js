@@ -58,3 +58,15 @@ function adminLog(event) {
     }
 
 }
+
+function createDev(event) {
+    event.preventDefault();
+
+    const openModal = document.getElementById("up-modal");
+    openModal.style.display = "block";
+}
+
+function upModal() {
+    const openModal = document.getElementById("up-modal");
+    openModal.style.display = "none"; 
+}
