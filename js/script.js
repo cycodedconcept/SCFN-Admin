@@ -13,7 +13,7 @@ function adminLog(event) {
         Swal.fire({
             icon: 'info',
             text: 'All Fields are Required',
-            confirmButtonColor: '#DF3331'
+            confirmButtonColor: 'rgb(13, 141, 13)'
         })
         getSpin.style.display = "none";
     }
@@ -39,7 +39,7 @@ function adminLog(event) {
                 Swal.fire({
                     icon: 'success',
                     text: `${result.status}`,
-                    confirmButtonColor: '#25067C'
+                    confirmButtonColor: 'rgb(13, 141, 13)'
                 })
 
                 setTimeout(() => {
@@ -50,7 +50,7 @@ function adminLog(event) {
                 Swal.fire({
                     icon: 'info',
                     text: `${result.status}`,
-                    confirmButtonColor: '#25067C'
+                    confirmButtonColor: 'rgb(13, 141, 13)'
                 }) 
             }
         })
@@ -69,4 +69,95 @@ function createDev(event) {
 function upModal() {
     const openModal = document.getElementById("up-modal");
     openModal.style.display = "none"; 
+}
+
+
+function createNewContent(event) {
+    event.preventDefault();
+
+    const getSpin = document.querySelector(".spin");
+    getSpin.style.display = "inline-block";
+
+    
+    const eventName = document.querySelector(".eName").value;
+    const frontImage = document.querySelector(".fimg").files[0];
+    const eventCategory = document.querySelector(".cat").value;
+
+
+    // let eventContent = document.querySelector(".content").value;
+
+    let myContent = tinymce.activeEditor.getContent();
+    let strippedOutput = myContent.replace(/<[^>]*>/g, '');
+
+    const multipleImage = document.querySelector(".mimg").files;
+
+    let imageArray = [];
+
+    for (let i = 0; i < multipleImage.length; i++) {
+        imageArray.push(multipleImage[i]);
+    }
+
+    console.log(imageArray, eventName, frontImage, strippedOutput);
+
+    
+
+    if (frontImage === "" || multipleImage === "" || eventName === "") {
+        Swal.fire({
+            icon: 'info',
+            text: 'All Fields are Required!',
+            confirmButtonColor: 'rgb(13, 141, 13)'
+        })
+
+        getSpin.style.display = "none";
+    }
+
+    else {
+        const getKey = localStorage.getItem("admin");
+
+        const contentHeader = new Headers();
+        // contentHeader.append('Content-Type', 'application/json');
+        contentHeader.append("Authorization", `Bearer ${getKey}`);
+
+        const contentData = new FormData();
+        contentData.append("front_image", frontImage);
+        contentData.append("files[]", imageArray);
+        contentData.append("events_news_name", eventName);
+        contentData.append("category_type", eventCategory);
+        contentData.append("events_news_content", strippedOutput);
+
+        const contentMethod = {
+            method: 'POST',
+            headers: contentHeader,
+            body: contentData
+        }
+
+        const url = `${baseUrl}admin/create-events-and-news`;
+
+        fetch(url, contentMethod)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+
+            if (result.message === "Files uploaded successfully") {
+                Swal.fire({
+                    icon: 'success',
+                    text: `${result.message}`,
+                    confirmButtonColor: 'rgb(13, 141, 13)'
+                })
+
+                setTimeout(() => {
+                    location.reload();
+                }, 3000)
+            }
+            else {
+                Swal.fire({
+                    icon: 'info',
+                    text: `${result.message}`,
+                    confirmButtonColor: 'rgb(13, 141, 13)'
+                }) 
+            }
+        })
+        .catch(error => console.log('error', error));
+    }
+
 }
