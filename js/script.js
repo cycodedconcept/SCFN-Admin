@@ -89,19 +89,13 @@ function createNewContent(event) {
     let myContent = tinymce.activeEditor.getContent();
     let strippedOutput = myContent.replace(/<[^>]*>/g, '');
 
-    const multipleImage = document.querySelector(".mimg").files;
+    let multipleImage = document.querySelector(".mimg");
 
-    let imageArray = [];
-
-    for (let i = 0; i < multipleImage.length; i++) {
-        imageArray.push(multipleImage[i]);
-    }
-
-    console.log(imageArray, eventName, frontImage, strippedOutput);
+    let selectFiles = multipleImage.files;
 
     
 
-    if (frontImage === "" || multipleImage === "" || eventName === "") {
+    if (frontImage === "" || eventName === "") {
         Swal.fire({
             icon: 'info',
             text: 'All Fields are Required!',
@@ -115,15 +109,18 @@ function createNewContent(event) {
         const getKey = localStorage.getItem("admin");
 
         const contentHeader = new Headers();
-        // contentHeader.append('Content-Type', 'application/json');
         contentHeader.append("Authorization", `Bearer ${getKey}`);
 
         const contentData = new FormData();
         contentData.append("front_image", frontImage);
-        contentData.append("files[]", imageArray);
+
+        for (let i = 0; i < selectFiles.length; i++) {
+            contentData.append("files[]", selectFiles[i])
+        }
         contentData.append("events_news_name", eventName);
         contentData.append("category_type", eventCategory);
         contentData.append("events_news_content", strippedOutput);
+
 
         const contentMethod = {
             method: 'POST',
@@ -138,7 +135,7 @@ function createNewContent(event) {
         .then(result => {
             console.log(result)
 
-            if (result.message === "Files uploaded successfully") {
+            if (result.message === "Files uploaded successfully!") {
                 Swal.fire({
                     icon: 'success',
                     text: `${result.message}`,
@@ -154,7 +151,8 @@ function createNewContent(event) {
                     icon: 'info',
                     text: `${result.message}`,
                     confirmButtonColor: 'rgb(13, 141, 13)'
-                }) 
+                })
+                getSpin.style.display = "none";
             }
         })
         .catch(error => console.log('error', error));
