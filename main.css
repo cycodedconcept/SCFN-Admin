@@ -376,7 +376,7 @@ table {
 }
 
 .mio {
-    position: absolute;
+    /* position: absolute; */
     bottom: -45px;
     right: 0;
 }
@@ -1085,9 +1085,21 @@ hr {
     padding: 20px 15px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin-bottom: 25px;
+    height: 600px;
+    position: relative;
 }
 
-.search-card h3 {
+.tit {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.tit:hover {
+    color: #DF3331
+}
+
+.search-card h5 {
     color: #6280e4;;
 }
 

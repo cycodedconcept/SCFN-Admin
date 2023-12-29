@@ -159,3 +159,142 @@ function createNewContent(event) {
     }
 
 }
+
+function getAllEvents() {
+    const getKey = localStorage.getItem("admin");
+    const paginationContainer = document.getElementById('pagination-container');
+
+
+    const showEvent = document.querySelector(".showEvent");
+    const getModal = document.querySelector(".pagemodal");
+
+    getModal.style.display = "block";
+
+    const contentHeader = new Headers();
+    contentHeader.append("Authorization", `Bearer ${getKey}`);
+
+    const eventMethod = {
+        method: 'GET',
+        headers: contentHeader
+    }
+
+    let data = [];
+
+    const url = `${baseUrl}admin/get-events-and-news`;
+
+    fetch(url, eventMethod)
+    .then(response => response.json())
+    .then(result => {
+        console.log(result)
+
+        if (result.data.length === 0) {
+            showEvent.innerHTML = "No Records Found!";
+            getModal.style.display = "none";
+        }
+        else {
+            result.data.map((item) => {
+                data += `
+                   <div class="col-sm-12 col-md-12 col-lg-6">
+                      <div class="search-card">
+                         <div class="search-card-header">
+                            <img src=${item.events_news_front_image} alt="image" class="w-100">
+                         </div>
+                         <div class="search-card-body">
+                            <h5>${item.events_news_name}</h5>
+                            <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606">...Read More</span></p>
+                         </div>
+                         <div class="search-card-footer text-right">
+                            <i class="fas fa-edit tit" title="edit content" onclick="showEditModal(${item.id})"></i>
+                         </div>
+                      </div>
+                   </div>
+                `
+                showEvent.innerHTML = data;
+                getModal.style.display = "none";
+            })
+        }
+
+        let totalPages = result.last_page;
+        let currentPage = result.current_page;
+        let maxVisiblePages = 5;
+
+        function createPagination() {
+            paginationContainer.innerHTML = '';
+
+            const startPage = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 1);
+            const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+
+            for (let page = startPage; page <= endPage; page++) {
+                const pageElement = document.createElement('span');
+                pageElement.textContent = page;
+                pageElement.className = page === currentPage ? 'mactive' : '';
+                pageElement.classList.add("monc");
+                pageElement.addEventListener('click', () => onPageClick(page));
+                paginationContainer.appendChild(pageElement);
+            }
+
+            if (startPage > 1) {
+                const prevDots = document.createElement('span');
+                prevDots.textContent = '...';
+                prevDots.className = 'dots';
+                paginationContainer.insertBefore(prevDots, paginationContainer.firstChild);
+            }
+            if (endPage < totalPages) {
+                const nextDots = document.createElement('span');
+                nextDots.textContent = '...';
+                nextDots.className = 'dots';
+                paginationContainer.appendChild(nextDots);
+            }
+            
+        }
+        function onPageClick(page) {
+            currentPage = page;
+            console.log(currentPage)
+            const getSpin = document.querySelector(".pagemodal");
+            getSpin.style.display = "block";
+
+            const getKey = localStorage.getItem("admin");
+
+            const contentHeader = new Headers();
+            contentHeader.append("Authorization", `Bearer ${getKey}`);
+
+            const eventMethod = {
+                method: 'GET',
+                headers: contentHeader
+            }
+
+            let data2 = [];
+
+            const url = `${baseUrl}admin/get-events-and-news?page=${currentPage}`;
+
+           fetch(url, eventMethod)
+           .then(response => response.json())
+           .then(result => {
+               console.log(result)
+               result.data.map((item) => {
+                data2 += `
+                   <div class="col-sm-12 col-md-12 col-lg-6">
+                      <div class="search-card">
+                         <div class="search-card-header">
+                            <img src=${item.events_news_front_image} alt="image" class="w-100">
+                         </div>
+                         <div class="search-card-body">
+                            <h5>${item.events_news_name}</h5>
+                            <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606">...Read More</span></p>
+                         </div>
+                      </div>
+                   </div>
+                `
+                showEvent.innerHTML = data2;
+                getModal.style.display = "none";
+            })
+           })
+           .catch(error => console.log('error', error));
+            createPagination()
+        }
+
+        createPagination();
+
+    })
+    .catch(error => console.log('error', error));
+}
