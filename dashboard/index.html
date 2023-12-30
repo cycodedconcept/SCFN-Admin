@@ -126,6 +126,55 @@
         </div>
         </div>
 
+        <div id="update-modal" class="mymodal mb-5">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-center">Update Event</h3>
+                    <span class="close" onclick="updateModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-sm-12 col-md-12 col-lg-6 mt-3">
+                              <label class="lab">Front Image</label>
+                              <input type="file" class="palo upfimg">
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-6 mt-3">
+                              <label class="lab">Multiple Images</label>
+                              <input type="file" class="palo upmimg" multiple>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                <label class="lab">Event Name</label>
+                                <input type="text" class="palo upeName mb-3" placeholder="Enter event name">
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-6">
+                                <label class="lab">Event Category</label>
+                                <select class="palo upcat">
+                                    <option value="news">News</option>
+                                    <option value="event">Events</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <label class="lab">Event Content</label>
+    
+                        <textarea id="updateMyTextarea"></textarea>
+    
+                        <div class="form-footer-item text-center mt-5 mb-5">
+                          <button class="co-btn" onclick="updateContent(event)">
+                            <div class="spinner-border spinner-border-sm text-light spin2" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                              Update Event
+                          </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+
        </main>
     </div>
     
@@ -142,20 +191,36 @@
 
     <script>
         tinymce.init({
-    selector: '#myTextarea',
-    plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
-    menubar: 'file edit view insert format tools table help',
-    toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-    toolbar_sticky: true,
-    autosave_ask_before_unload: true,
-    autosave_interval: '30s',
-    autosave_prefix: '{path}{query}-{id}-',
-    autosave_restore_when_empty: false,
-    autosave_retention: '2m',
-    image_advtab: true,
-    forced_root_block: "",
-    
-});
+            selector: '#myTextarea',
+            plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: '30s',
+            autosave_prefix: '{path}{query}-{id}-',
+            autosave_restore_when_empty: false,
+            autosave_retention: '2m',
+            image_advtab: true,
+            forced_root_block: "",
+            
+        });
+
+        tinymce.init({
+            selector: '#updateMyTextarea',
+            plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: '30s',
+            autosave_prefix: '{path}{query}-{id}-',
+            autosave_restore_when_empty: false,
+            autosave_retention: '2m',
+            image_advtab: true,
+            forced_root_block: "",
+            
+        });
     </script>
 
 </body>

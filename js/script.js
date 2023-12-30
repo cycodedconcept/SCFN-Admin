@@ -1,4 +1,5 @@
 const baseUrl = "https://www.sicklecellfoundation.com/scfn-luth-api/api/";
+let globalid;
 
 function adminLog(event) {
     event.preventDefault()
@@ -227,7 +228,7 @@ function getAllEvents() {
             for (let page = startPage; page <= endPage; page++) {
                 const pageElement = document.createElement('span');
                 pageElement.textContent = page;
-                pageElement.className = page === currentPage ? 'mactive' : '';
+                pageElement.className = page === currentPage ? 'mactive3' : '';
                 pageElement.classList.add("monc");
                 pageElement.addEventListener('click', () => onPageClick(page));
                 paginationContainer.appendChild(pageElement);
@@ -282,6 +283,9 @@ function getAllEvents() {
                             <h5>${item.events_news_name}</h5>
                             <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606">...Read More</span></p>
                          </div>
+                         <div class="search-card-footer text-right">
+                            <i class="fas fa-edit tit" title="edit content" onclick="showEditModal(${item.id})"></i>
+                         </div>
                       </div>
                    </div>
                 `
@@ -297,4 +301,96 @@ function getAllEvents() {
 
     })
     .catch(error => console.log('error', error));
+}
+
+function showEditModal(upid) {
+    const getModal = document.getElementById("update-modal");
+    getModal.style.display = "block";
+    globalid = upid;
+}
+
+function updateModal() {
+    const getModal = document.getElementById("update-modal");
+    getModal.style.display = "none"
+}
+
+function updateContent(event) {
+    event.preventDefault();
+
+    const getSpin = document.querySelector(".spin");
+    getSpin.style.display = "inline-block";
+
+    const upeventName = document.querySelector(".upeName").value;
+    const upfrontImage = document.querySelector(".upfimg").files[0];
+    const upeventCategory = document.querySelector(".upcat").value;
+
+
+    let myContent = tinymce.activeEditor.getContent();
+    let strippedOutput = myContent.replace(/<[^>]*>/g, '');
+
+    let multipleImage = document.querySelector(".upmimg");
+
+    let selectFiles = multipleImage.files;
+
+    if (upfrontImage === "" || upeventName === "" || upeventCategory === "") {
+        Swal.fire({
+            icon: 'info',
+            text: 'All Fields are Required!',
+            confirmButtonColor: 'rgb(13, 141, 13)'
+        })
+
+        getSpin.style.display = "none";
+    }
+    else {
+        const getKey = localStorage.getItem("admin");
+
+        const contentHeader = new Headers();
+        contentHeader.append("Authorization", `Bearer ${getKey}`);
+
+        const contentData = new FormData();
+        contentData.append("id", globalid)
+        contentData.append("front_image", upfrontImage);
+
+        for (let i = 0; i < selectFiles.length; i++) {
+            contentData.append("files[]", selectFiles[i])
+        }
+        contentData.append("events_news_name", upeventName);
+        contentData.append("category_type", upeventCategory);
+        contentData.append("events_news_content", strippedOutput);
+
+        const contentMethod = {
+            method: 'POST',
+            headers: contentHeader,
+            body: contentData
+        }
+
+        const url = `${baseUrl}admin/edit-events-and-news`;
+
+        fetch(url, contentMethod)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+
+            if (result.message === "updated successfully") {
+                Swal.fire({
+                    icon: 'success',
+                    text: `${result.message}`,
+                    confirmButtonColor: 'rgb(13, 141, 13)'
+                })
+                setTimeout(() => {
+                    location.reload();
+                }, 3000)
+            }
+
+            else {
+                Swal.fire({
+                    icon: 'info',
+                    text: `${result.message}`,
+                    confirmButtonColor: 'rgb(13, 141, 13)'
+                })
+                getSpin.style.display = "none";
+            }
+        })
+        .catch(error => console.log('error', error));
+    }
 }
