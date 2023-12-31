@@ -188,6 +188,8 @@ function getAllEvents() {
     .then(result => {
         console.log(result)
 
+        localStorage.setItem("items", JSON.stringify(result.data))
+
         if (result.data.length === 0) {
             showEvent.innerHTML = "No Records Found!";
             getModal.style.display = "none";
@@ -272,6 +274,7 @@ function getAllEvents() {
            .then(response => response.json())
            .then(result => {
                console.log(result)
+               localStorage.setItem("items", JSON.stringify(result.data))
                result.data.map((item) => {
                 data2 += `
                    <div class="col-sm-12 col-md-12 col-lg-6">
@@ -304,9 +307,34 @@ function getAllEvents() {
 }
 
 function showEditModal(upid) {
+    const upName = document.querySelector(".upeName");
+    let dropdown = document.querySelector(".upcat");
+
+
     const getModal = document.getElementById("update-modal");
     getModal.style.display = "block";
     globalid = upid;
+
+    const getItems = localStorage.getItem("items");
+    const theItems = JSON.parse(getItems);
+
+    let opValue;
+
+    theItems.map((item) => {
+        if (upid === item.id) {
+            upName.setAttribute("value", `${item.events_news_name}`);
+            tinyMCE.activeEditor.setContent(item.events_news_content);
+            opValue = item.category_type
+        }     
+
+    })
+
+    for (let i = 0; i < dropdown.options.length; i++) {
+        if (dropdown.options[i].value === opValue) {
+          dropdown.selectedIndex = i;
+          break;
+        }
+    } 
 }
 
 function updateModal() {
@@ -382,6 +410,71 @@ function updateContent(event) {
                 }, 3000)
             }
 
+            else {
+                Swal.fire({
+                    icon: 'info',
+                    text: `${result.message}`,
+                    confirmButtonColor: 'rgb(13, 141, 13)'
+                })
+                getSpin.style.display = "none";
+            }
+        })
+        .catch(error => console.log('error', error));
+    }
+}
+
+function updateAdmin(event) {
+    event.preventDefault();
+
+    const getSpin = document.querySelector(".spin2");
+    getSpin.style.display = "inline-block";
+
+    const oldPass = document.querySelector(".oldpass").value;
+    const newPass = document.querySelector(".newpass").value;
+
+
+    if (oldPass === "" || newPass === "") {
+        Swal.fire({
+            icon: 'info',
+            text: "Both Fields are Required!",
+            confirmButtonColor: 'rgb(13, 141, 13)'
+        })
+        getSpin.style.display = "none";
+    }
+
+    else {
+        const getKey = localStorage.getItem("admin");
+
+        const contentHeader = new Headers();
+        contentHeader.append("Authorization", `Bearer ${getKey}`);
+
+        const updata = new FormData();
+        updata.append("oldpassword", oldPass);
+        updata.append("newpassword", newPass);
+
+        const upMethod = {
+            method: 'POST',
+            headers: contentHeader,
+            body: updata
+        }
+
+        const url = `${baseUrl}admin/update-admin-details`;
+
+        fetch(url, upMethod)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+
+            if (result.status === "success") {
+                Swal.fire({
+                    icon: 'success',
+                    text: `${result.message}`,
+                    confirmButtonColor: 'rgb(13, 141, 13)'
+                })
+                setTimeout(() => {
+                    location.href = "../index.html"
+                }, 3000)
+            }
             else {
                 Swal.fire({
                     icon: 'info',

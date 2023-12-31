@@ -717,6 +717,7 @@ hr {
 
 .jumbotron {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 10% auto;
 }
 
 .fiter-btn {
@@ -915,7 +916,7 @@ hr {
     background: #0C1E5B;
 }
 
-.spin {
+.spin, .spin2 {
     display: none;
 }
 
