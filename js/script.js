@@ -317,6 +317,10 @@ function getAllEvents() {
 function showEditModal(upid) {
     const upName = document.querySelector(".upeName");
     let dropdown = document.querySelector(".upcat");
+    const day = document.getElementById("day");
+    const month = document.getElementById("month");
+    const year = document.getElementById("year");
+
 
 
     const getModal = document.getElementById("update-modal");
@@ -327,12 +331,18 @@ function showEditModal(upid) {
     const theItems = JSON.parse(getItems);
 
     let opValue;
+    let dayValue;
+    let monthValue;
+    let yearValue;
 
     theItems.map((item) => {
         if (upid === item.id) {
             upName.setAttribute("value", `${item.events_news_name}`);
             tinyMCE.activeEditor.setContent(item.events_news_content);
-            opValue = item.category_type
+            opValue = item.category_type;
+            dayValue = item.day;
+            monthValue = item.month;
+            yearValue = item.year;
         }     
 
     })
@@ -342,7 +352,14 @@ function showEditModal(upid) {
           dropdown.selectedIndex = i;
           break;
         }
-    } 
+    }
+
+    for (let i = 0; i < day.options.length; i++) {
+        if (dropdown.options[i].value === dayValue) {
+            dropdown.selectedIndex = i;
+            break;
+        }
+    }
 }
 
 
@@ -548,43 +565,70 @@ function blogDetails() {
 
 
 function populateDays() {
-    var dayDropdown = document.getElementById("day");
+    let dayDropdown = document.querySelector(".dayItem");
+    let dayDropdown2 = document.querySelector(".updayItem");
 
-    for (var i = 1; i <= 31; i++) {
-      var option = document.createElement("option");
+
+    for (let i = 1; i <= 31; i++) {
+      let option = document.createElement("option");
       option.value = i;
       option.text = i;
       dayDropdown.add(option);
     }
-  }
+
+    for (let i = 1; i <= 31; i++) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        dayDropdown2.add(option);
+    }
+}
 
   // Function to populate the months dropdown
-  function populateMonths() {
-    var monthDropdown = document.getElementById("month");
-    var months = [
-      "January", "February", "March", "April",
-      "May", "June", "July", "August",
-      "September", "October", "November", "December"
+function populateMonths() {
+    let monthDropdown = document.querySelector(".monthItem");
+    let monthDropdown2 = document.querySelector(".upmonthItem");
+
+    let months = [
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
     ];
 
-    for (var i = 0; i < months.length; i++) {
-      var option = document.createElement("option");
-      option.value = i + 1;
-      option.text = months[i];
-      monthDropdown.add(option);
+    for (let i = 0; i < months.length; i++) {
+        let option = document.createElement("option");
+        option.value = i + 1;
+        option.text = months[i];
+        monthDropdown.add(option);
     }
-  }
+
+    for (let i = 0; i < months.length; i++) {
+        let option = document.createElement("option");
+        option.value = i + 1;
+        option.text = months[i];
+        monthDropdown2.add(option);
+    }
+}
 
   // Function to populate the years dropdown (adjust the range as needed)
-  function populateYears() {
-    var yearDropdown = document.getElementById("year");
-    var currentYear = new Date().getFullYear();
+function populateYears() {
+    let yearDropdown = document.querySelector(".yearItem");
+    let yearDropdown2 = document.querySelector(".upyearItem");
 
-    for (var i = currentYear; i >= currentYear - 100; i--) {
-      var option = document.createElement("option");
+    let currentYear = new Date().getFullYear();
+
+    for (let i = currentYear; i >= currentYear - 100; i--) {
+      let option = document.createElement("option");
       option.value = i;
       option.text = i;
       yearDropdown.add(option);
+    }
+
+    for (let i = currentYear; i >= currentYear - 100; i--) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        yearDropdown2.add(option);
     }
 }
 
