@@ -23,7 +23,7 @@
     </style>
 
 </head>
-<body onload="getAllEvents()">
+<body onload="getAllEvents(), populateDays(), populateMonths(), populateYears()">
     <div class="pagemodal">
         <div class="preloader">
             <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-ripple" style="background:0 0"><circle cx="50" cy="50" r="4.719" fill="none" stroke="#1d3f72" stroke-width="2"><animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="3" keySplines="0 0.2 0.8 1" begin="-1.5s" repeatCount="indefinite"/><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="3" keySplines="0.2 0 0.8 1" begin="-1.5s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="27.591" fill="none" stroke="#5699d2" stroke-width="2"><animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="3" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"/><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="3" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"/></circle></svg>
@@ -32,11 +32,14 @@
     <input type="checkbox" id="nav-toggle">
     <div class="sidebar bg-dark">
        <div class="sidebar-brand mb-5">
-          <a href="dashboard.html"><img class="imglog" src="../assets/logo2.png" alt="wave"></a>
+          <a href="../dashboard/" class="arnd"><img class="imglog" src="../assets/logo2.png" alt="wave"></a>
        </div>
 
        <div class="sidebar-menu">
        <ul>
+           <li class="logosmall">
+             <a href="../dashboard/"><img class="imglog" src="../assets/logo2.png" alt="wave"></a>
+           </li>
             <li>
              <a href="../dashboard" class="active" style="text-decoration: none;"><i class="fa fa-dashboard mr-2" style="color: #DF3331;"></i><span>Dashboard</span></a>
             </li>
@@ -54,9 +57,10 @@
        <header>
            <div class="ripus">
                 <div class="d-flex">
-                    <h2 class="cn">
+                    <h2 class="cn ml-3 mr-3 mt-3">
                         <label for="nav-toggle">
-                            <i class="fa fa-bars" style="color: #DF3331;"></i>
+                            <!-- <i class="fa fa-bars" style="color: #DF3331;"></i> -->
+                            <img src="../assets/tuggle.png" alt="">
                         </label>
                     </h2>
                 </div>
@@ -66,7 +70,7 @@
 
        <main>
 
-        <div class="create text-right mt-3 mb-5">
+        <div class="create mt-5 mb-5">
             <button class="create-btn" onclick="createDev(event)">Create New Event</button>
         </div>
 
@@ -104,13 +108,36 @@
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-6">
                             <label class="lab">Event Category</label>
-                            <select class="palo cat">
+                            <select class="palo cat" onchange="showEventDetails(event)">
                                 <option>choose category</option>
                                 <option value="news">News</option>
                                 <option value="event">Events</option>
                             </select>
                         </div>
                     </div>
+
+                    <div class="event-side">
+                        <p style="color: #DF3331;" class="ml-2">Choose Day of Event</p>
+                        <div class="box-flex">
+                            <div>
+
+                            <label for="day">Day:</label>
+                            <select id="day" class="palo dayItem"></select>
+                            </div>
+
+                            <div>
+                                <label for="month">Month:</label>
+                                <select id="month" class="palo monthItem"></select>
+                            </div>
+                            
+                            <div>
+                                <label for="year">Year:</label>
+                                <select id="year" class="palo yearItem"></select>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
 
                     <label class="lab">Event Content</label>
                     <!-- <textarea name="" id="" cols="30" rows="10" class="palo content"></textarea> -->
@@ -178,7 +205,7 @@
                     </form>
                 </div>
             </div>
-            </div>
+        </div>
 
        </main>
     </div>

@@ -83,6 +83,10 @@ function createNewContent(event) {
     const eventName = document.querySelector(".eName").value;
     const frontImage = document.querySelector(".fimg").files[0];
     const eventCategory = document.querySelector(".cat").value;
+    const dayItem = document.querySelector(".dayItem").value;
+    const monthItem = document.querySelector(".monthItem").value;
+    const yearItem = document.querySelector(".yearItem").value;
+
 
 
     // let eventContent = document.querySelector(".content").value;
@@ -121,6 +125,10 @@ function createNewContent(event) {
         contentData.append("events_news_name", eventName);
         contentData.append("category_type", eventCategory);
         contentData.append("events_news_content", strippedOutput);
+        contentData.append("day", dayItem);
+        contentData.append("month", monthItem);
+        contentData.append("year", yearItem);
+
 
 
         const contentMethod = {
@@ -204,7 +212,7 @@ function getAllEvents() {
                          </div>
                          <div class="search-card-body">
                             <h5>${item.events_news_name}</h5>
-                            <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606">...Read More</span></p>
+                            <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606"><a href="../details.html?id=${item.id}">...Read More</a></span></p>
                          </div>
                          <div class="search-card-footer text-right">
                             <i class="fas fa-edit tit" title="edit content" onclick="showEditModal(${item.id})"></i>
@@ -284,7 +292,7 @@ function getAllEvents() {
                          </div>
                          <div class="search-card-body">
                             <h5>${item.events_news_name}</h5>
-                            <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606">...Read More</span></p>
+                            <p>${item.events_news_content.substring(0, 150)}<span style="color: #C80606"><a href="../details.html?id=${item.id}">...Read More</a></span></p>
                          </div>
                          <div class="search-card-footer text-right">
                             <i class="fas fa-edit tit" title="edit content" onclick="showEditModal(${item.id})"></i>
@@ -336,6 +344,8 @@ function showEditModal(upid) {
         }
     } 
 }
+
+
 
 function updateModal() {
     const getModal = document.getElementById("update-modal");
@@ -487,3 +497,129 @@ function updateAdmin(event) {
         .catch(error => console.log('error', error));
     }
 }
+
+
+function blogDetails() {
+    const params = new URLSearchParams(window.location.search);
+    let getId = params.get('id');
+    myId = parseInt(getId)
+
+    const sectionBlog = document.querySelector(".owl-carousel");
+    const frontImage = document.querySelector(".front-img");
+    const blogHead = document.querySelector(".blog-head");
+
+    const textBlog = document.querySelector(".item-text");
+
+
+    const getItems = localStorage.getItem("items");
+    const theItems = JSON.parse(getItems);
+
+    let data = [];
+
+    theItems.map((item) => {
+        console.log(item)
+        if (myId === item.id) {
+            item.event_news_image_array.map((itemImage) => {
+                data += `
+                <div class="card-item-image">
+                    <div class="search-card-force">
+                        <div class="search-card-header">
+                            <img src=${itemImage.file_url} alt="" class="w-100"/>
+                        </div>
+                    </div>
+                </div>        
+                `
+                sectionBlog.innerHTML = data;
+                
+            })
+
+        
+            let dynamicText = item.events_news_content;
+
+            let newText = dynamicText.replace(/\./g, `.\n <br><br>`);
+
+            textBlog.innerHTML = `<p>${newText}</p>`;
+
+            frontImage.src = item.events_news_front_image;
+            blogHead.innerHTML = item.events_news_name;
+        }
+    })
+}
+
+
+function populateDays() {
+    var dayDropdown = document.getElementById("day");
+
+    for (var i = 1; i <= 31; i++) {
+      var option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      dayDropdown.add(option);
+    }
+  }
+
+  // Function to populate the months dropdown
+  function populateMonths() {
+    var monthDropdown = document.getElementById("month");
+    var months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ];
+
+    for (var i = 0; i < months.length; i++) {
+      var option = document.createElement("option");
+      option.value = i + 1;
+      option.text = months[i];
+      monthDropdown.add(option);
+    }
+  }
+
+  // Function to populate the years dropdown (adjust the range as needed)
+  function populateYears() {
+    var yearDropdown = document.getElementById("year");
+    var currentYear = new Date().getFullYear();
+
+    for (var i = currentYear; i >= currentYear - 100; i--) {
+      var option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      yearDropdown.add(option);
+    }
+}
+
+  
+function showEventDetails(event) {
+    const eSlide = document.querySelector(".event-side");
+    event.currentTarget.value === "event" ? 
+    eSlide.style.display = "block" : 
+    eSlide.style.display = "none";
+
+}
+
+
+function slideIt() {
+    $('.owl-two').owlCarousel({
+        margin: 20,
+        loop  : true,
+        items: 1,
+        dots:true,
+        autoplay: true,
+        smartSpeed :900,
+        nav: true,
+        navText: ["<div class='nav-button owl-prev'><img src='../assets/slo.png' style='width: 12px;'></div>", "<div class='nav-button owl-next'><img src='../assets/slo2.png' style='width: 12px;'></div>"],
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 3
+            }
+        }
+    });
+}
+
+
