@@ -1446,7 +1446,7 @@ hr {
     }
 }
 
-.event-side {
+.event-side, .event-side2 {
     display: none;
 }
 

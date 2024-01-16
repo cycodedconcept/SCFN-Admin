@@ -260,7 +260,6 @@ function getAllEvents() {
         }
         function onPageClick(page) {
             currentPage = page;
-            console.log(currentPage)
             const getSpin = document.querySelector(".pagemodal");
             getSpin.style.display = "block";
 
@@ -317,10 +316,10 @@ function getAllEvents() {
 function showEditModal(upid) {
     const upName = document.querySelector(".upeName");
     let dropdown = document.querySelector(".upcat");
-    const day = document.getElementById("day");
-    const month = document.getElementById("month");
-    const year = document.getElementById("year");
-
+    const day = document.getElementById("day2");
+    const month = document.getElementById("month2");
+    const year = document.getElementById("year2");
+    const eventSide = document.querySelector(".event-side2");
 
 
     const getModal = document.getElementById("update-modal");
@@ -343,20 +342,42 @@ function showEditModal(upid) {
             dayValue = item.day;
             monthValue = item.month;
             yearValue = item.year;
-        }     
+
+            console.log(yearValue)
+        }
 
     })
 
     for (let i = 0; i < dropdown.options.length; i++) {
         if (dropdown.options[i].value === opValue) {
-          dropdown.selectedIndex = i;
+            if (opValue === "event") {
+                eventSide.style.display = "block";
+            }
+            else {
+                eventSide.style.display = "none";
+            }
+            dropdown.selectedIndex = i;
           break;
         }
     }
 
     for (let i = 0; i < day.options.length; i++) {
-        if (dropdown.options[i].value === dayValue) {
-            dropdown.selectedIndex = i;
+        if (day.options[i].value === dayValue) {
+            day.selectedIndex = i;
+            break;
+        }
+    }
+
+    for (let i = 0; i < month.options.length; i++) {
+        if (month.options[i].value === monthValue) {
+            month.selectedIndex = i;
+            break;
+        }
+    }
+
+    for (let i = 0; i < year.options.length; i++) {
+        if (year.options[i].value === yearValue) {
+            year.selectedIndex = i;
             break;
         }
     }
@@ -378,6 +399,10 @@ function updateContent(event) {
     const upeventName = document.querySelector(".upeName").value;
     const upfrontImage = document.querySelector(".upfimg").files[0];
     const upeventCategory = document.querySelector(".upcat").value;
+    const upday = document.querySelector(".updayItem").value;
+    const upmonth = document.querySelector(".upmonthItem").value;
+    const upyear = document.querySelector(".upyearItem").value;
+
 
 
     let myContent = tinymce.activeEditor.getContent();
@@ -412,6 +437,9 @@ function updateContent(event) {
         contentData.append("events_news_name", upeventName);
         contentData.append("category_type", upeventCategory);
         contentData.append("events_news_content", strippedOutput);
+        contentData.append("day", upday);
+        contentData.append("month", upmonth);
+        contentData.append("year", upyear);
 
         const contentMethod = {
             method: 'POST',
@@ -635,6 +663,14 @@ function populateYears() {
   
 function showEventDetails(event) {
     const eSlide = document.querySelector(".event-side");
+    event.currentTarget.value === "event" ? 
+    eSlide.style.display = "block" : 
+    eSlide.style.display = "none";
+
+}
+
+function showEventDetails2(event) {
+    const eSlide = document.querySelector(".event-side2");
     event.currentTarget.value === "event" ? 
     eSlide.style.display = "block" : 
     eSlide.style.display = "none";
