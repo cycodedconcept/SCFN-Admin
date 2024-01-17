@@ -383,6 +383,10 @@ function showEditModal(upid) {
     }
 }
 
+function gotoLoginPage(event) {
+    event.preventDefault()
+    location.href = "../index.html";
+}
 
 
 function updateModal() {
@@ -393,7 +397,7 @@ function updateModal() {
 function updateContent(event) {
     event.preventDefault();
 
-    const getSpin = document.querySelector(".spin");
+    const getSpin = document.querySelector(".spin2");
     getSpin.style.display = "inline-block";
 
     const upeventName = document.querySelector(".upeName").value;
@@ -702,4 +706,25 @@ function slideIt() {
     });
 }
 
+function logAdminOut(event) {
+    event.preventDefault();
 
+    if (localStorage.getItem("admin")) {
+        Swal.fire({
+            icon: 'success',
+            text: 'Logged out successfully!',
+            confirmButtonColor: 'rgb(13, 141, 13)'
+        })
+        setTimeout(() => {
+            localStorage.clear();
+            location.href = "../index.html"
+        }, 3000)
+    }
+    else {
+        Swal.fire({
+            icon: 'info',
+            text: 'Logged out unsuccessfully!',
+            confirmButtonColor: 'rgb(13, 141, 13)'
+        })
+    }
+}

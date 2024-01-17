@@ -1454,3 +1454,9 @@ hr {
     display: flex;
     justify-content: space-between;
 }
+
+@media screen and (max-width: 695px) {
+    .box-flex div {
+        margin-right: 10px;
+    }
+}
