@@ -52,7 +52,8 @@ function adminLog(event) {
                     icon: 'info',
                     text: `${result.status}`,
                     confirmButtonColor: 'rgb(13, 141, 13)'
-                }) 
+                })
+                getSpin.style.display = "none";
             }
         })
         .catch(error => console.log('error', error));
@@ -208,7 +209,7 @@ function getAllEvents() {
                    <div class="col-sm-12 col-md-12 col-lg-6">
                       <div class="search-card">
                          <div class="search-card-header">
-                            <img src=${item.events_news_front_image} alt="image" class="w-100">
+                            <img src="${item.events_news_front_image}" alt="image" class="w-100">
                          </div>
                          <div class="search-card-body">
                             <h5>${item.events_news_name}</h5>
@@ -287,7 +288,7 @@ function getAllEvents() {
                    <div class="col-sm-12 col-md-12 col-lg-6">
                       <div class="search-card">
                          <div class="search-card-header">
-                            <img src=${item.events_news_front_image} alt="image" class="w-100">
+                            <img src="${item.events_news_front_image}" alt="image" class="w-100">
                          </div>
                          <div class="search-card-body">
                             <h5>${item.events_news_name}</h5>
@@ -573,7 +574,7 @@ function blogDetails() {
                 <div class="card-item-image">
                     <div class="search-card-force">
                         <div class="search-card-header">
-                            <img src=${itemImage.file_url} alt="" class="w-100"/>
+                            <img src="${itemImage.file_url}" alt="" class="w-100"/>
                         </div>
                     </div>
                 </div>        
@@ -692,6 +693,30 @@ function slideIt() {
         smartSpeed :900,
         nav: true,
         navText: ["<div class='nav-button owl-prev'><img src='../assets/slo.png' style='width: 12px;'></div>", "<div class='nav-button owl-next'><img src='../assets/slo2.png' style='width: 12px;'></div>"],
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 3
+            }
+        }
+    });
+}
+
+function split2() {
+    $('.owl-two').owlCarousel({
+        margin: 20,
+        loop  : true,
+        items: 1,
+        dots:true,
+        autoplay: true,
+        smartSpeed :900,
+        nav: true,
+        navText: ["<div class='nav-button owl-prev'><img src='./assets/slo.png' style='width: 12px;'></div>", "<div class='nav-button owl-next'><img src='./assets/slo2.png' style='width: 12px;'></div>"],
         responsive: {
             0: {
                 items: 1
