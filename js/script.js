@@ -742,7 +742,7 @@ function logAdminOut(event) {
         })
         setTimeout(() => {
             localStorage.clear();
-            location.href = "../index.html"
+            location.href = "admin/index.html"
         }, 3000)
     }
     else {
